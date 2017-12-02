@@ -1,6 +1,6 @@
 <div>
   <h1>
-    <%= @wiki.title %> <br>
+    <%= @wiki.title %>&emsp;<% if @wiki.private %><span class="badge">Private</span><%end%> <br>
     <small>
       Created <%= time_ago_in_words(@wiki.created_at) %>.
       <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success btn-small' %>
