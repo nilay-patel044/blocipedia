@@ -19,5 +19,6 @@
 
 /node_modules
 /yarn-error.log
+/config/application.yml
 /Users/nilaypatel/code/blocipedia/config/environments/development.rb
 .byebug_history

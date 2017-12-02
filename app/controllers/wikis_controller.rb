@@ -1,5 +1,5 @@
 class WikisController < ApplicationController
-  skip_before_action :authenticate_user!
+  skip_before_action :authenticate_user!, except: [:index, :show]
 
 
   def index
@@ -12,27 +12,31 @@ class WikisController < ApplicationController
 
   def new
     @wiki = Wiki.new
+    # authorize @wiki
   end
 
   def create
     @wiki = current_user.wikis.new(wiki_params)
+    # authorize @wiki
 
     if @wiki.save
       flash[:notice] = "Wiki successfully created!"
       redirect_to @wiki
     else
       puts "Error Saving Wiki\n\n#{@wiki.errors.full_messages}\n\n"
-      flash[:alert] = "There was an error saving your Wiki. Please try again."
+      flash.now[:alert] = "There was an error saving your Wiki. Please try again."
       render :new
     end
   end
 
   def edit
     @wiki = Wiki.find(params[:id])
+    # authorize @wiki
   end
 
   def update
     @wiki = Wiki.find(params[:id])
+    # authorize @wiki
     @wiki.assign_attributes(wiki_params)
 
     if @wiki.save
@@ -40,14 +44,14 @@ class WikisController < ApplicationController
       redirect_to @wiki
     else
       puts "Error Updating Wiki\n\n#{@wiki.errors.full_messages}\n\n"
-      flash[:alert] = "There was an error updating your Wiki. Please try again."
+      flash.now[:alert] = "There was an error updating your Wiki. Please try again."
       render :edit
     end
   end
 
   def destroy
     @wiki = Wiki.find(params[:id])
-
+    # authorize @wiki
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" Wiki destroyed successfully!"
       redirect_to wikis_path

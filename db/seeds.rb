@@ -1,4 +1,4 @@
-# require 'random_data'
+
 require 'faker'
  # Create Wikis
  50.times do
@@ -12,27 +12,9 @@ require 'faker'
  end
  wikis = Wiki.all
 
+some_password = Faker::Internet.password
 
- # Create an admin user
-admin = User.create!(
-  email:    Faker::Internet.email,
-  password: Faker::Internet.password,
-  role:     'admin'
-)
-
-# Create a member
-member = User.create!(
-  email:    Faker::Internet.email,
-  password: Faker::Internet.password,
-  role:     'member'
-)
-
-premium = User.create!(
-  email:    Faker::Internet.email,
-  password: Faker::Internet.password,
-  role:     'premium'
-)
-
+User.create!(email: Faker::Internet.email, password: some_password, password_confirmation: some_password)
 users = User.all
 
 
